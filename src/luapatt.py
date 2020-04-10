@@ -19,8 +19,9 @@
 # IN THE SOFTWARE.
 
 from array import array
+import unicodedata
 
-__version__ = '0.9.0b5'
+__version__ = '0.9.0b6'
 
 _ARRAYTYPECODES = {}
 for code in 'bhilq':
@@ -443,9 +444,12 @@ class _PatternMatcher:
             match = sc.isdigit() or sc in 'abcdefABCDEF'
         elif pcl == 'z':
             match = sc == '\0'
-        elif pcl in 'cgp':
-            raise NotImplementedError('{0}c, {0}g, and {0}p are not '
-                                      'available'.format(ESCAPE))
+        elif pcl == 'c':
+            match = unicodedata.category(sc)[0] == 'C'
+        elif pcl == 'g':
+            match = unicodedata.category(sc)[0] not in ('C', 'Z')
+        elif pcl == 'p':
+            match = unicodedata.category(sc)[0] == 'P'
         else:
             return sc == pc
         return match if pc.islower() else not match
