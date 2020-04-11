@@ -21,7 +21,7 @@
 from array import array
 import unicodedata
 
-__version__ = '0.9.0b6'
+__version__ = '0.9.0b5'
 
 _ARRAYTYPECODES = {}
 for code in 'bhilq':
@@ -447,7 +447,7 @@ class _PatternMatcher:
         elif pcl == 'c':
             match = unicodedata.category(sc)[0] == 'C'
         elif pcl == 'g':
-            match = unicodedata.category(sc)[0] not in ('C', 'Z')
+            match = unicodedata.category(sc)[0] not in 'CZ'
         elif pcl == 'p':
             match = unicodedata.category(sc)[0] == 'P'
         else:
