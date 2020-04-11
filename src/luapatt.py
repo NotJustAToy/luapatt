@@ -19,6 +19,7 @@
 # IN THE SOFTWARE.
 
 from array import array
+from collections.abc import Mapping
 import unicodedata
 
 __version__ = '0.9.0b5'
@@ -206,7 +207,7 @@ class _PatternMatcher:
     def subst(self, captures, repl, matchstart, matchend):
         if callable(repl):
             value = repl(*captures)
-        elif type(repl) == dict:
+        elif isinstance(repl, Mapping):
             value = repl.get(captures[0])
         else:
             value = self._subst_str(captures, str(repl), matchstart, matchend)
